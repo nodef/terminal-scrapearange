@@ -19,7 +19,7 @@ var method = () => {};
 // II. log functions
 const logSill = (msg) => { if(verbose) console.log(chalk.gray(msg)); };
 const logVerb = (msg) => { if(verbose) console.log(chalk.yellowBright(msg)); };
-const logErr = (msg) => { console.error(chalk.redBright(msg)); };
+const logErr = (msg) => { if(verbose) console.error(chalk.redBright(msg)); };
 
 
 const request = (opt) => new Promise((fres, frej) => {
@@ -102,7 +102,7 @@ const main = (opt) => {
     job[i-start] = i.toString();
   run(job).then((err) => {
     logVerb(`${start} -> ${stop} done; ${job.length-err.length} passed, ${err.length} failed.`);
-    if(err.length>0) console.error(err.length, err);
+    if(err.length>0) console.error(chalk.redBright(JSON.stringify(err)));
     if(output!=null) output.end();
   });
 };
