@@ -9,6 +9,7 @@ const chalk = require('chalk');
 
 // I. global variables
 const A = process.argv;
+const USER_AGENT = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)';
 var output = null, retries = 4;
 var connections = 4, timegap = 250;
 var verbose = false;
@@ -21,9 +22,11 @@ const logVerb = (msg) => { if(verbose) console.log(chalk.yellowBright(msg)); };
 const logErr = (msg) => { console.error(chalk.redBright(msg)); };
 
 
-
 const request = (opt) => new Promise((fres, frej) => {
-  // 1. make request to website
+  // 1. setup options
+  opt.headers = opt.headers||{};
+  opt.headers['user-agent'] = opt.headers['user-agent']||USER_AGENT;
+  // 2. make request to website
   logSill(`> GET https://${opt.hostname}${opt.path}`);
   var req = https.request(opt, (res) => {
     res.setEncoding('utf8');
