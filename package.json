@@ -1,6 +1,6 @@
 {
   "name": "terminal-scrapearange",
-  "version": "0.1.9",
+  "version": "0.1.10",
   "description": "Terminal interface implementation for ranged web scraping.",
   "main": "index.js",
   "scripts": {

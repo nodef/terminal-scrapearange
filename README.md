@@ -9,7 +9,7 @@ const scrapeArange = require('terminal-scrapearange');
 // scrapeArange.logSill(<message>): for less important logs (verbose)
 // scrapeArange.logVerb(<message>): for important logs (verbose)
 // scrapeArange.logErr(<message>): for error logs (verbose)
-// scrapeArange.request(<options>): make https request
+// scrapeArange.request(<options>): make http/https request (follows redirect)
 // scrapeArange.main(<options>): terminal interface
 
 scrapeArange.logSill('> GET somewebsite.org')
