@@ -8,7 +8,7 @@
 const scrapeArange = require('terminal-scrapearange');
 // scrapeArange.logSill(<message>): for less important logs (verbose)
 // scrapeArange.logVerb(<message>): for important logs (verbose)
-// scrapeArange.logErr(<message>): for error logs
+// scrapeArange.logErr(<message>): for error logs (verbose)
 // scrapeArange.request(<options>): make https request
 // scrapeArange.main(<options>): terminal interface
 
@@ -17,7 +17,7 @@ scrapeArange.logSill('> GET somewebsite.org')
 scrapeArange.logVerb('Scraping post 12...')
 // > Scraping post 12... (in bright yellow, if verbose enabled)
 scrapeArange.logErr('ERR: 12 failed')
-// > ERR: 12 failed (in red)
+// > ERR: 12 failed (in bright red, if verbose enabled)
 scrapeArange.request({
   hostname: 'somewebsite.org',
   port: 443,
@@ -33,6 +33,10 @@ if(require.main===module) scrapeArange.main({
   verbose: false,   // get detailed output?
   method: () => {}, // method that scrapes html and returns JSON object
 });
+// { /* object returned from method() */ }
+// { /* another object returned from method() */ }
+// ... (redirected to output file if specified with -o|--output)
+// STDERR: [ /* array of failed ids, if any */ ]
 ```
 
 
