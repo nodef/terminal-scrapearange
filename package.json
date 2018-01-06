@@ -1,6 +1,6 @@
 {
   "name": "terminal-scrapearange",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Terminal interface implementation for ranged web scraping.",
   "main": "index.js",
   "scripts": {
@@ -12,5 +12,9 @@
     "arange"
   ],
   "author": "wolfram77@gmail.com",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "chalk": "^2.3.0",
+    "http-status": "^1.0.1"
+  }
 }
