@@ -26,10 +26,10 @@ const logErr = (msg) => { if(verbose) console.error(chalk.redBright(msg)); };
 const request = (opt) => new Promise((fres, frej) => {
   // 1. setup options
   opt.headers = opt.headers||{};
-  opt.protocol = opt.protocol||'https';
+  opt.protocol = opt.protocol||'https:';
   opt.headers['user-agent'] = opt.headers['user-agent']||USER_AGENT;
   // 2. make request to website
-  var prefix = opt.protocol+'://';
+  var prefix = opt.protocol+'//';
   logSill(`> GET ${prefix}${opt.hostname}${opt.path}`);
   var req = (prefix==='https://'? https:http).request(opt, (res) => {
     res.setEncoding('utf8');
