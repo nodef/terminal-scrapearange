@@ -21,15 +21,13 @@ const logErr = (msg) => { if(verbose) console.log(chalk.redBright(msg)); };
 
 
 
-const request = (path) => new Promise((fres, frej) => {
+const request = (opt) => new Promise((fres, frej) => {
   // 1. make request to usda ndb
-  var headers = {'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)'};
-  var opt = {method: 'GET', hostname: 'ndb.nal.usda.gov', path, headers};
-  logSill(`> GET https://${opt.hostname}${path}`);
+  logSill(`> GET https://${opt.hostname}${opt.path}`);
   var req = https.request(opt, (res) => {
     res.setEncoding('utf8');
     var dat = '', code = res.statusCode, status = httpStatus[code];
-    logSill(`< https://${opt.hostname}${path} : ${code} ${status}`);
+    logSill(`< https://${opt.hostname}${opt.path} : ${code} ${status}`);
     res.on('data', (chu) => dat += chu);
     res.on('end', () => {
       if(code>=200 && code<300) fres(dat);
@@ -39,7 +37,6 @@ const request = (path) => new Promise((fres, frej) => {
   req.on('error', (e) => frej(e));
   req.end();
 });
-module.exports = ndb;
 
 
 // IV. command-line
