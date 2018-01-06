@@ -1,6 +1,6 @@
 {
   "name": "terminal-scrapearange",
-  "version": "0.1.10",
+  "version": "0.1.11",
   "description": "Terminal interface implementation for ranged web scraping.",
   "main": "index.js",
   "scripts": {
@@ -16,5 +16,13 @@
   "dependencies": {
     "chalk": "^2.3.0",
     "http-status": "^1.0.1"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nodef/terminal-scrapearange.git"
+  },
+  "bugs": {
+    "url": "https://github.com/nodef/terminal-scrapearange/issues"
+  },
+  "homepage": "https://github.com/nodef/terminal-scrapearange#readme"
 }
