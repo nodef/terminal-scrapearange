@@ -1,0 +1,16 @@
+{
+  "name": "terminal-scrapearange",
+  "version": "0.0.1",
+  "description": "Terminal interface implementation for ranged web scraping.",
+  "main": "index.js",
+  "scripts": {
+    "test": "exit"
+  },
+  "keywords": [
+    "terminal",
+    "scrape",
+    "arange"
+  ],
+  "author": "wolfram77@gmail.com",
+  "license": "MIT"
+}
