@@ -12,13 +12,13 @@ const A = process.argv;
 var output = null, retries = 4;
 var connections = 4, timegap = 250;
 var verbose = false;
-var primary = () => {};
+var method = () => {};
 
 
 // II. log functions
 const logSill = (msg) => { if(verbose) console.log(chalk.gray(msg)); };
 const logVerb = (msg) => { if(verbose) console.log(chalk.yellowBright(msg)); };
-const logErr = (msg) => { if(verbose) console.log(chalk.redBright(msg)); };
+const logErr = (msg) => { console.error(chalk.redBright(msg)); };
 
 
 
@@ -41,7 +41,7 @@ const request = (opt) => new Promise((fres, frej) => {
 
 
 // IV. command-line
-const fetch = (err, id) => primary(id).then((dat) => {
+const fetch = (err, id) => method(id).then((dat) => {
   logVerb(`${id}: ${dat['Number']}, ${dat['Name']} - ${Object.keys(dat).length} properties`);
   if(output==null) console.log(JSON.stringify(dat));
   else output.write(JSON.stringify(dat)+os.EOL);
@@ -76,7 +76,7 @@ const main = (opt) => {
   if(opt.connections!==undefined) connections = opt.connections;
   if(opt.timegap!==undefined) timegap = opt.timegap;
   if(opt.verbose!==undefined) verbose = opt.verbose;
-  if(opt.primary!==undefined) primary = opt.primary;
+  if(opt.method!==undefined) method = opt.method;
   // 2. process arguments
   var values = [], job = [];
   for(var i=2, I=A.length; i<I; i++) {
