@@ -19,6 +19,7 @@ scrapeArange.logVerb('Scraping post 12...')
 scrapeArange.logErr('ERR: 12 failed')
 // > ERR: 12 failed (in bright red, if verbose enabled)
 scrapeArange.request({
+  protocol: 'https',
   hostname: 'somewebsite.org',
   port: 443,
   path: '/',
