@@ -1,6 +1,7 @@
 'use strict';
 const os = require('os');
 const fs = require('fs');
+const http = require('http');
 const https = require('https');
 const cp = require('child_process');
 const httpStatus = require('http-status');
@@ -25,13 +26,15 @@ const logErr = (msg) => { if(verbose) console.error(chalk.redBright(msg)); };
 const request = (opt) => new Promise((fres, frej) => {
   // 1. setup options
   opt.headers = opt.headers||{};
+  opt.protocol = opt.protocol||'https';
   opt.headers['user-agent'] = opt.headers['user-agent']||USER_AGENT;
   // 2. make request to website
-  logSill(`> GET https://${opt.hostname}${opt.path}`);
-  var req = https.request(opt, (res) => {
+  var prefix = opt.protocol+'://';
+  logSill(`> GET ${prefix}${opt.hostname}${opt.path}`);
+  var req = (protocol==='https'? https:http).request(opt, (res) => {
     res.setEncoding('utf8');
     var dat = '', code = res.statusCode, status = httpStatus[code];
-    logSill(`< https://${opt.hostname}${opt.path} : ${code} ${status}`);
+    logSill(`< ${prefix}${opt.hostname}${opt.path} : ${code} ${status}`);
     res.on('data', (chu) => dat += chu);
     res.on('end', () => {
       if(code>=200 && code<300) fres(dat);
