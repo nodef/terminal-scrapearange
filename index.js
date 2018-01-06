@@ -1,6 +1,7 @@
 'use strict';
 const os = require('os');
 const fs = require('fs');
+const url = require('url');
 const http = require('http');
 const https = require('https');
 const cp = require('child_process');
@@ -28,16 +29,17 @@ const request = (opt) => new Promise((fres, frej) => {
   opt.headers = opt.headers||{};
   opt.protocol = opt.protocol||'https:';
   opt.headers['user-agent'] = opt.headers['user-agent']||USER_AGENT;
+  var ishttps = opt.protocol==='https:', prefix = opt.protocol+'//';
   // 2. make request to website
-  var prefix = opt.protocol+'//';
   logSill(`> GET ${prefix}${opt.hostname}${opt.path}`);
-  var req = (prefix==='https://'? https:http).request(opt, (res) => {
+  var req = (ishttps? https:http).request(opt, (res) => {
     res.setEncoding('utf8');
     var dat = '', code = res.statusCode, status = httpStatus[code];
     logSill(`< ${prefix}${opt.hostname}${opt.path} : ${code} ${status}`);
     res.on('data', (chu) => dat += chu);
     res.on('end', () => {
-      if(code>=200 && code<300) fres(dat);
+      if(code>=300 && code<400) request(Object.assign(opt, url.parse(res.headers['location']))).then(fres);
+      else if(code>=200 && code<300) fres(dat);
       else frej(new Error(code+' '+status));
     });
   });
