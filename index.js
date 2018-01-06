@@ -3,7 +3,6 @@ const os = require('os');
 const fs = require('fs');
 const https = require('https');
 const cp = require('child_process');
-const cheerio = require('cheerio');
 const httpStatus = require('http-status');
 const chalk = require('chalk');
 
@@ -21,39 +20,6 @@ const logVerb = (msg) => { if(verbose) console.log(chalk.yellowBright(msg)); };
 const logErr = (msg) => { if(verbose) console.log(chalk.redBright(msg)); };
 
 
-function text(elm, $) {
-  // 1. get text in element
-  if(!elm.childNodes.length) return $(elm).text();
-  return $(elm.firstChild).text();
-};
-
-function nameParts(z, str, id) {
-  // 1. get details from name
-  var ni = str.search(/^\d+/);
-  var si = ni===0? str.indexOf(',')+2:0;
-  var ui = str.search(/UPC: \d+$/);
-  z['Number'] = si>0? str.substring(0, si-2):id;
-  z['Name'] = str.substring(si, ui>0? ui-2:str.length);
-  if(ui>0) z['UPC'] = str.substring(ui+5);
-  return z;
-};
-
-function headerParts(z, $, elm) {
-  // 1. get details from header
-  var names = elm.find('.name');
-  var values = elm.find('.value');
-  for(var i=0, I=names.length; i<I; i++)
-    z[$(names[i]).text().trim().replace(/:/g, '')] = $(values[i]).text().trim();
-};
-
-function bodyParts(z, $, elm, vali) {
-  // 1. get details from body
-  var tds = $(elm).find('td');
-  var name = text(tds[1], $).trim();
-  var unit = $(tds[2]).text().trim();
-  var value = $(tds[vali]).text().trim();
-  z[name] = `${value} ${unit}`;
-};
 
 const request = (path) => new Promise((fres, frej) => {
   // 1. make request to usda ndb
@@ -73,21 +39,6 @@ const request = (path) => new Promise((fres, frej) => {
   req.on('error', (e) => frej(e));
   req.end();
 });
-
-
-// III. main function
-function ndb(id) {
-  return request(`/ndb/foods/show/${id}?format=Full`).then((html) => {
-    var $ = cheerio.load(html), z = {'Id': id};
-    var viewName = $('#view-name');
-    if(viewName==null) return {};
-    nameParts(z, viewName.text().trim().match(/\d+,.*/g)[0], id);
-    $('.prop').each((i, elm) => headerParts(z, $, $(elm)));
-    var vali = z.hasOwnProperty('Manufacturer')? 4:3;
-    $('#nutdata tbody tr').each((i, elm) => bodyParts(z, $, $(elm), vali));
-    return z;
-  });
-};
 module.exports = ndb;
 
 
