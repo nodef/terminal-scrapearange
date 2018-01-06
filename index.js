@@ -31,7 +31,7 @@ const request = (opt) => new Promise((fres, frej) => {
   // 2. make request to website
   var prefix = opt.protocol+'://';
   logSill(`> GET ${prefix}${opt.hostname}${opt.path}`);
-  var req = (protocol==='https'? https:http).request(opt, (res) => {
+  var req = (prefix==='https://'? https:http).request(opt, (res) => {
     res.setEncoding('utf8');
     var dat = '', code = res.statusCode, status = httpStatus[code];
     logSill(`< ${prefix}${opt.hostname}${opt.path} : ${code} ${status}`);
