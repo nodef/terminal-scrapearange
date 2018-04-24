@@ -1,5 +1,7 @@
 # terminal-scrapearange
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/nodef/terminal-scrapearange.svg)](https://greenkeeper.io/)
+
 [![NPM](https://nodei.co/npm/terminal-scrapearange.png)](https://nodei.co/npm/terminal-scrapearange/)
 
 [Terminal] interface implementation for [ranged] [web scraping].
