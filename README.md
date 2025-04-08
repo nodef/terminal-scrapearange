@@ -44,3 +44,5 @@ if(require.main===module) scrapeArange.main({
 [Terminal]: https://en.wikipedia.org/wiki/Terminal_emulator
 [ranged]: https://docs.scipy.org/doc/numpy-1.13.0/reference/generated/numpy.arange.html
 [web scraping]: https://en.wikipedia.org/wiki/Web_scraping
+
+![](https://ga-beacon.deno.dev/G-RC63DPBH3P:SH3Eq-NoQ9mwgYeHWxu7cw/github.com/nodef/terminal-scrapearange)
